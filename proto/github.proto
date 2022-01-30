@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+message GHSearchRequest {
+    string query = 1;
+    enum QueryType {
+        UNKNOWN = 0;
+        USER = 1;
+        REPO = 2;
+    }
+    QueryType type = 2;
+    int32 result_per_page = 3;
+}
+
+message GHSearchResponse {
+    string server_response = 1;
+    GHSearchRequest.QueryType type = 2;
+}
+
+service GithubService {
+    rpc Search(GHSearchRequest) returns (GHSearchResponse);
+}
