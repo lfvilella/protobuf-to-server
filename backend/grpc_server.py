@@ -2,6 +2,8 @@ import logging
 from concurrent import futures
 
 import grpc
+from google.protobuf import json_format
+from grpc.reflection.v1alpha import reflection
 
 import github_pb2
 import github_pb2_grpc
@@ -15,21 +17,32 @@ class GithubService(github_pb2_grpc.GithubServiceServicer):
         request: github_pb2.GHSearchRequest,
         context: grpc.ServicerContext,
     ) -> github_pb2.GHSearchResponse:
-        py_request = github_pydantic.GHSearchRequest(
-            query=request.query,
-            type=request.type,
-            result_per_page=request.result_per_page,
+        dict_request = json_format.MessageToDict(
+            request,
+            preserving_proto_field_name=True,
+            use_integers_for_enums=True,
         )
+        py_request = github_pydantic.GHSearchRequest(**dict_request)
         py_response = github_service.search(py_request)
         return github_pb2.GHSearchResponse(**py_response.dict())
 
 
 def serve():
+    service_names = []
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+
+    logging.info("Attaching GithubService")
     github_pb2_grpc.add_GithubServiceServicer_to_server(
         GithubService(),
         server,
     )
+    service_names.append(
+        github_pb2.DESCRIPTOR.services_by_name["GithubService"].full_name
+    )
+
+    service_names.append(reflection.SERVICE_NAME)
+    reflection.enable_server_reflection(service_names, server)
+
     server.add_insecure_port("[::]:50051")
     logging.info("Starting gRPC server")
     server.start()
