@@ -1,6 +1,12 @@
 grpcio==1.43.0
 grpcio-tools==1.43.0
-protobuf2pydantic==2021.11.25
+grpcio-reflection==1.43.0
+
 pydantic==1.9.0
+
+protobuf2pydantic==2021.11.25
+pydantic2graphene==0.5.1
+
+starlette-graphene3==0.5.1
 fastapi==0.73.0
 uvicorn==0.17.1
