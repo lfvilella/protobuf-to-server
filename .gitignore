@@ -132,7 +132,8 @@ dmypy.json
 **/**/*_pb2_grpc.py
 **/**/*_pb2.py
 **/**/*_pb.js
-**/**/*_pb.js
+**/**/*_pb.d.ts
+**/**/*ClientPb.ts
 
 # ignore npm node_modules
 

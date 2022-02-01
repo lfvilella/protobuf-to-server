@@ -26,7 +26,7 @@ def search(
         github_pydantic.GHSearchRequest
     ),
 ):
-    return github_service.search(q)
+    return github_service.search(q, "REST API")
 
 
 class Query(graphene.ObjectType):
@@ -38,7 +38,8 @@ class Query(graphene.ObjectType):
     @staticmethod
     def resolve_search(parent, info, filters):
         return github_service.search(
-            github_pydantic.GHSearchRequest(**filters)
+            github_pydantic.GHSearchRequest(**filters),
+            "GraphQL",
         )
 
 
