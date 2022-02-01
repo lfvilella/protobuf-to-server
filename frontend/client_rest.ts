@@ -6,8 +6,7 @@ const search = (request: GHSearchRequest): Promise<GHSearchResponse> => {
         fetch(`/rest/search?${qs.toString()}`)
             .then(response => {
                 if (!response.ok) {
-                    const err = `API call failed: ${response.status}:${response.statusText}`;
-                    throw new Error(err);
+                    throw new Error(`API call failed: ${response.status}:${response.statusText}`);
                 }
                 return response.json();
             })
