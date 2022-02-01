@@ -16,4 +16,4 @@ RUN apt-get update \
 
 CMD /usr/local/bin/proto-build-js \
     && /usr/local/bin/js-build \
-    && http-server -a --port=8081
+    && http-server -a --port=8081 /src/frontend/dist/

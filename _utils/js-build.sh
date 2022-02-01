@@ -2,4 +2,4 @@
 
 cd /src/frontend \
     && npm i \
-    && npx webpack ./client.js --mode=production
+    && npm run build
