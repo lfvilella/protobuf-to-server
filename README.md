@@ -1,6 +1,6 @@
 # protobuf-to-server
 
-Project to explore [Protocol Buffers](https://developers.google.com/protocol-buffers) to empower a [gRPC](https://grpc.io/), [REST API](https://restfulapi.net/) and [GraphQL](https://graphql.org/) in the backend and a [gRPC web client](https://github.com/grpc/grpc-web) in the frontend, all trhee backends and the frontend are using the same proto definition, they are just compiled in different languages or converted to some frameworks specific objects, but all use the `proto` as primary source.
+Project to explore [Protocol Buffers](https://developers.google.com/protocol-buffers) to empower a [gRPC](https://grpc.io/), [REST API](https://restfulapi.net/) and [GraphQL](https://graphql.org/) in the backend and a [gRPC web client](https://github.com/grpc/grpc-web) in the frontend, all trhee backends and the frontend are using the same proto definition, they are just compiled in different languages or converted to some frameworks specific objects, but all use the `proto` as primary data model.
 
 ## Proto definition
 
