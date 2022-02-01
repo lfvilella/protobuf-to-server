@@ -1,13 +1,12 @@
 import logging
 from concurrent import futures
 
-import grpc
-from google.protobuf import json_format
-from grpc.reflection.v1alpha import reflection
-
 import github_pb2
 import github_pb2_grpc
 import github_pydantic
+import grpc
+from google.protobuf import json_format
+from grpc.reflection.v1alpha import reflection
 from services import github_service
 
 
@@ -43,8 +42,9 @@ def serve():
     service_names.append(reflection.SERVICE_NAME)
     reflection.enable_server_reflection(service_names, server)
 
-    server.add_insecure_port("[::]:50051")
-    logging.info("Starting gRPC server")
+    server_port = "[::]:8001"
+    server.add_insecure_port(server_port)
+    logging.info("Starting gRPC server: %s", server_port)
     server.start()
     server.wait_for_termination()
 

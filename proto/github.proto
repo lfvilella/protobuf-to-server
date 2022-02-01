@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package server2proto;
+
 message GHSearchRequest {
     string query = 1;
     enum QueryType {

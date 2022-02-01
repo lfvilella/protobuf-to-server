@@ -1,0 +1,47 @@
+# local dev composer
+
+version: '3.7'
+services:
+  backend-grpc:
+    build:
+      dockerfile: docker-backend.Dockerfile
+      context: .
+    command: "/bin/sh -c '/usr/local/bin/proto-build-py && python grpc_server.py'"
+    volumes:
+      - ./:/src
+    stdin_open: true
+    tty: true
+
+  backend-http:
+    build:
+      dockerfile: docker-backend.Dockerfile
+      context: .
+    command: "/bin/sh -c '/usr/local/bin/proto-build-py && uvicorn http_server:app --host=0.0.0.0 --port=8000'"
+    volumes:
+      - ./:/src
+    stdin_open: true
+    tty: true
+
+  frontend:
+    build:
+      dockerfile: docker-frontend.Dockerfile
+      context: .
+    volumes:
+      - ./:/src
+    stdin_open: true
+    tty: true
+
+  proxy:
+    image: envoyproxy/envoy:v1.21.0
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend-grpc
+      - backend-http
+      - frontend
+    links:
+      - backend-grpc:backend-grpc-host
+      - backend-http:backend-http-host
+      - frontend:frontend-host

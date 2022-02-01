@@ -129,4 +129,11 @@ dmypy.json
 .pyre/
 
 # ignore proto generated files
-**/**/*_pb2*
+**/**/*_pb2_grpc.py
+**/**/*_pb2.py
+**/**/*_pb.js
+**/**/*_pb.js
+
+# ignore npm node_modules
+
+**/**/node_modules

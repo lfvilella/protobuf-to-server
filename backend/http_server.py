@@ -1,14 +1,16 @@
 import fastapi
+import github_graphene
+import github_pydantic
 import graphene
 import pydantic.error_wrappers
 import starlette_graphene3
 from fastapi import exception_handlers
-
-import github_graphene
-import github_pydantic
 from services import github_service
 
-app = fastapi.FastAPI()
+app = fastapi.FastAPI(
+    docs_url="/rest/docs",
+    openapi_url="/rest/openapi.json",
+)
 
 
 @app.exception_handler(pydantic.error_wrappers.ValidationError)
@@ -43,7 +45,7 @@ class Query(graphene.ObjectType):
 schema = graphene.Schema(query=Query)
 
 app.add_route(
-    "/graphql",
+    "/GraphQL",
     starlette_graphene3.GraphQLApp(
         schema=schema,
         on_get=starlette_graphene3.make_graphiql_handler(),
