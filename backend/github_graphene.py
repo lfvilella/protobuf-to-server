@@ -1,7 +1,6 @@
+import github_pydantic
 import graphene
 import pydantic2graphene
-
-import github_pydantic
 
 
 class GHSearchRequest(
