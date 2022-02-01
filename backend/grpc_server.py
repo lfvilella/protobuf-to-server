@@ -22,7 +22,7 @@ class GithubService(github_pb2_grpc.GithubServiceServicer):
             use_integers_for_enums=True,
         )
         py_request = github_pydantic.GHSearchRequest(**dict_request)
-        py_response = github_service.search(py_request)
+        py_response = github_service.search(py_request, "gRPC")
         return github_pb2.GHSearchResponse(**py_response.dict())
 
 
